@@ -17,25 +17,35 @@ public class NPCBehaviour : MonoBehaviour
     private void Awake()
     {
         circleCollider = GetComponent<CircleCollider2D>();
+    }
+    private void Start()
+    {
         askIcon.SetActive(false);
         choicesPanel.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!askIcon.activeSelf)
+        if (collision.gameObject.tag == "Player")
         {
-            askIcon.SetActive(true);
-            choicesPanel.SetActive(true);
+            if (!askIcon.activeSelf)
+            {
+                askIcon.SetActive(true);
+                choicesPanel.SetActive(true);
+            }
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (askIcon.activeSelf)
+        if (collision.gameObject.tag == "Player")
         {
-            askIcon.SetActive(false);
-            choicesPanel.SetActive(false);
+            Debug.Log("player exit");
+            if (askIcon.activeSelf)
+            {
+                askIcon.SetActive(false);
+                choicesPanel.SetActive(false);
+            }
         }
     }
 }
